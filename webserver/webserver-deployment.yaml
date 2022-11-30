@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webserver-simple
+  labels:
+    app: webserver
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: webserver
+  template:
+    metadata:
+      labels:
+        app: webserver
+        editor: vscode
+    spec:
+      containers:
+        - name: webserver
+          image: gkdlgkdl2040/testweb:develop
