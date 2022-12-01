@@ -17,4 +17,4 @@ spec:
     spec:
       containers:
         - name: webserver
-          image: gkdlgkdl2040/testweb:ba49f44e
+          image: gkdlgkdl2040/testweb:195a1c49
