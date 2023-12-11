@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yomankum-front-deployment
+  namespace: yomankum
+  labels:
+    app: yomankum-front
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: yomankum-front
+  template:
+    metadata:
+      labels:
+        app: yomankum-front
+    spec:
+      containers:
+      - name: front-app
+        image: harbor.3trolls.me/yomankum/front/front-app:v0.0.1-latest
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: harbor
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: yomankum-svc
+  namespace: yomankum
+spec:
+  # Make the service externally visible via the node
+  type: NodePort
+
+  ports:
+    # Which port on the node is the service available through?
+    - nodePort: 31234
+    # Inside the cluster, what port does the service expose?
+      port: 80
+    # Which port do pods selected by this service expose?
+      targetPort: 80
+
+  selector:
+    #name : yomankum-front-deployment
+    app: yomankum-front
